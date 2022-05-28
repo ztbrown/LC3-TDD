@@ -13,7 +13,7 @@ START_TEST(it_extends_a_positive_number_with_0s)
   uint16_t result;
 
   // Act
-  result = sign_extend(instr);
+  result = sign_extend(instr, 5);
 
   // Assert
   ck_assert_int_eq(result, 0b0000000000000001);
@@ -23,14 +23,14 @@ END_TEST
 START_TEST(it_extends_a_negative_number_with_1s)
 {
   // Arrange
-  uint16_t instr = 0b10001;
+  uint16_t instr = 0b100001;
   uint16_t result;
 
   // Act
-  result = sign_extend(instr);
+  result = sign_extend(instr, 6);
 
   // Assert
-  ck_assert_int_eq(result, 0b1111111111110001);
+  ck_assert_int_eq(result, 0b1111111111100001);
 }
 END_TEST
 

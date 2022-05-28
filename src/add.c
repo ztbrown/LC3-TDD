@@ -9,7 +9,7 @@ void add(uint16_t instr) {
   int source = (instr >> 6) & 0x7;
   int destination = (instr >> 9) & 0x7;
   if ((instr >> 5) & 0x1) {
-    uint16_t imm5 = sign_extend(instr & 0x1f);
+    uint16_t imm5 = sign_extend(instr & 0x1f, 5);
     reg[destination] = reg[source] + imm5;
   }
   else {
