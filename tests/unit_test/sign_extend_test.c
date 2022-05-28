@@ -4,13 +4,7 @@
 
 #include "sign_extend_test.h"
 
-uint16_t sign_extend(uint16_t number) {
-  int bit_count = 5;
-  if ((number >> (bit_count - 1)) & 1) {
-    number |= (0xFFFF << bit_count);
-  }
-  return number;
-}
+#include "../../src/sign_extend.h"
 
 START_TEST(it_extends_a_positive_number_with_0s)
 {
