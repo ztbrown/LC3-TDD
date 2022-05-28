@@ -25,6 +25,9 @@ enum FLAGS
   FL_NEG = 1 << 2, /* N */
 };
 
+#define MEMORY_MAX (1 << 16)
+extern uint16_t memory[MEMORY_MAX]; 
+
 extern uint16_t reg[R_COUNT];
 extern enum REGISTERS registers;
 extern enum FLAGS flags;
