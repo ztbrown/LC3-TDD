@@ -2,23 +2,15 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#include "../../src/vm.h"
+#include "../../src/memory.h"
 #include "memory_test.h"
-
-uint16_t mem_read(uint16_t address) {
-  return memory[address];
-}
-
-void mem_write(uint16_t address, uint16_t value) {
-  memory[address] = value;
-}
 
 START_TEST(it_reads_from_memory)
 {
   //Arrange
   uint16_t address=0;
   uint16_t result;
-  memory[address] = 1 << 15;
+  mem_write(address, 1 << 15);
 
   // Act
   result = mem_read(address);
