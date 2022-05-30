@@ -12,6 +12,7 @@
 #include "jsr_test.h"
 #include "load_test.h"
 #include "lea_test.h"
+#include "not_test.h"
 
 int main()
 {
@@ -29,6 +30,7 @@ int main()
     srunner_add_suite(sr, make_jsr_test_suite());
     srunner_add_suite(sr, make_load_test_suite());
     srunner_add_suite(sr, make_lea_test_suite());
+    srunner_add_suite(sr, make_not_test_suite());
 
     srunner_run_all(sr, CK_NORMAL);
 
