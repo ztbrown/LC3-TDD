@@ -27,7 +27,7 @@ Suite *make_jmp_ret_test_suite()
   Suite *s;
   TCase *tc;
 
-  s = suite_create("Memory");
+  s = suite_create("JMP RET");
   tc = tcase_create("Core");
 
   tcase_add_test(tc, it_unconditionally_jumps_to_base_register);

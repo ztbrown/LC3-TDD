@@ -45,7 +45,7 @@ Suite *make_jsr_test_suite()
   Suite *s;
   TCase *tc;
 
-  s = suite_create("Memory");
+  s = suite_create("JSR");
   tc = tcase_create("Core");
 
   tcase_add_test(tc, it_jumps_to_pcoffset_after_storing_current_PC_in_R7);
