@@ -8,6 +8,7 @@
 #include "ldi_test.h"
 #include "and_test.h"
 #include "conditional_branch_test.h"
+#include "jmp_ret_test.h"
 
 int main()
 {
@@ -21,6 +22,7 @@ int main()
     srunner_add_suite(sr, make_ldi_test_suite());
     srunner_add_suite(sr, make_and_test_suite());
     srunner_add_suite(sr, make_conditional_branch_test_suite());
+    srunner_add_suite(sr, make_jmp_ret_test_suite());
 
     srunner_run_all(sr, CK_NORMAL);
 
