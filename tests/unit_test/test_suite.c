@@ -16,6 +16,7 @@
 #include "store_test.h"
 #include "sti_test.h"
 #include "str_test.h"
+#include "trap_test.h"
 
 int main()
 {
@@ -37,6 +38,7 @@ int main()
     srunner_add_suite(sr, make_store_test_suite());
     srunner_add_suite(sr, make_sti_test_suite());
     srunner_add_suite(sr, make_str_test_suite());
+    srunner_add_suite(sr, make_trap_test_suite());
 
     srunner_run_all(sr, CK_NORMAL);
 

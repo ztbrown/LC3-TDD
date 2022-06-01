@@ -26,6 +26,7 @@ enum FLAGS
 };
 
 extern uint16_t reg[R_COUNT];
+extern int running;
 extern enum REGISTERS registers;
 extern enum FLAGS flags;
 
