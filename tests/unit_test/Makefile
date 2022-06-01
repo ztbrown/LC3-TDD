@@ -1,6 +1,6 @@
 TARGET = test_suite
 TMP = $(wildcard ../../src/*.c)
-SRCS = $(filter-out ../../src/GoHttp.c, $(TMP))
+SRCS = $(filter-out ../../src/main.c, $(TMP))
 TESTS = $(wildcard ./*_test.c)
 
 SRC_OBJS = $(SRCS:.c=.o)

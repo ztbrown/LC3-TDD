@@ -17,6 +17,7 @@
 #include "sti_test.h"
 #include "str_test.h"
 #include "mocked_test.h"
+#include "ldr_test.h"
 
 int main()
 {
@@ -39,6 +40,7 @@ int main()
     srunner_add_suite(sr, make_sti_test_suite());
     srunner_add_suite(sr, make_str_test_suite());
     srunner_add_suite(sr, make_mocked_test_suite());
+    srunner_add_suite(sr, make_ldr_test_suite());
 
     srunner_run_all(sr, CK_NORMAL);
 
