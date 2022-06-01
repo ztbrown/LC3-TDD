@@ -1,14 +1,20 @@
 #include <check.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "../../lib/mock.h"
 
+// modules under test
 #include "../../src/trap.h"
+#include "../../src/image.h"
+
+
 #include "../../src/memory.h"
 #include "../../src/prompt.h"
 #include "../../src/vm.h"
-#include "trap_test.h"
+
+#include "mocked_test.h"
 
 SIMULACRUM(void *, getchar, 0)
 SIMULACRUM(void *, putchar, 1, int)
@@ -162,12 +168,26 @@ START_TEST(it_halts_the_vm_TRAP_HALT)
 }
 END_TEST
 
-Suite *make_trap_test_suite()
+START_TEST(it_swaps_uint16t_bits_from_little_endian_to_big_e)
+{
+  // Arrange
+  uint16_t instr = 0b0101010111111111;
+  uint16_t rtn = 0;
+
+  // Act
+  rtn = swap16(instr);
+
+  // Assert
+  ck_assert_int_eq(rtn, 0b1111111101010101);
+}
+END_TEST
+
+Suite *make_mocked_test_suite()
 {
   Suite *s;
   TCase *tc;
 
-  s = suite_create("Trap");
+  s = suite_create("Trap \n Image");
   tc = tcase_create("Core");
 
   tcase_add_checked_fixture(tc, &setup, &teardown);
@@ -178,6 +198,7 @@ Suite *make_trap_test_suite()
   tcase_add_test(tc, it_reads_character_and_writes_it_to_console_and_R0_TRAP_IN);
   tcase_add_test(tc, it_reads_characters_two_at_a_time_from_memory_and_outputs_to_console_TRAP_PUTSP);
   tcase_add_test(tc, it_halts_the_vm_TRAP_HALT);
+  tcase_add_test(tc, it_swaps_uint16t_bits_from_little_endian_to_big_e);
 
   suite_add_tcase(s, tc);
 
