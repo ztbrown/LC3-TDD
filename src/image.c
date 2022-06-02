@@ -25,13 +25,13 @@ void read_image_file(FILE* file)
 
   /* we know the maximum file size so we only need one fread */
   uint16_t max_read = MEMORY_MAX - origin;
-  uint16_t p = mem_read(origin);
-  size_t read = fread(&p, sizeof(uint16_t), max_read, file);
+  uint16_t* p = memory + origin;
+  size_t read = fread(p, sizeof(uint16_t), max_read, file);
 
   /* swap to little endian */
   while (read-- > 0)
   {
-    p = swap16(p);
+    *p = swap16(*p);
     ++p;
   }
 }

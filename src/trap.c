@@ -18,30 +18,29 @@ enum
 };
 
 void trap(uint16_t instr) {
+  reg[R_R7] = reg[R_PC];
   switch(instr & 0xFF)
   {
     case TRAP_GETC:
-      {
-        reg[R_R0]=(uint16_t)getchar();
-        break;
-      }
+      reg[R_R0]=(uint16_t)getchar();
+      update_flags(R_R0);
+      break;
     case TRAP_OUT:
-      {
-        putchar((uint16_t)reg[R_R0]);
-        fflush(stdout);
-        break;
-      }
+      putchar((uint16_t)reg[R_R0]);
+      fflush(stdout);
+      break;
     case TRAP_PUTS: 
       {
-        uint16_t c = reg[R_R0];
-
-        while(mem_read(c)) {
-          putchar((char)mem_read(c));
+        /* one char per word */
+        uint16_t* c = memory + reg[R_R0];
+        while (*c)
+        {
+          putchar((char)*c);
           ++c;
-        } 
+        }
         fflush(stdout);
-        break;
       }
+      break;
     case TRAP_IN:
       {
         prompt("Enter a character: ");
@@ -49,27 +48,32 @@ void trap(uint16_t instr) {
         putchar((uint16_t)reg[R_R0]);
         fflush(stdout);
         update_flags(R_R0);
-        break;
       }
+      break;
     case TRAP_PUTSP:
       {
-        uint16_t c = reg[R_R0];
-
-        while(mem_read(c)) {
-          putchar((char)mem_read(c & 0xFF));
-          char ch2 = (char)mem_read(c >> 8);
-          if (ch2) putchar(ch2);
+        /* one char per byte (two bytes per word)
+         *        here we need to swap back to
+         *               big endian format */
+        uint16_t* c = memory + reg[R_R0];
+        while (*c)
+        {
+          char char1 = (*c) & 0xFF;
+          putchar(char1);
+          char char2 = (*c) >> 8;
+          if (char2) putchar(char2);
           ++c;
-        } 
+        }
         fflush(stdout);
-        break;
       }
+      break;
     case TRAP_HALT:
       {
         prompt("HALT");
         running=0;
         fflush(stdout);
       }
+      break;
   }
 }
 

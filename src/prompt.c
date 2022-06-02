@@ -2,6 +2,6 @@
 
 #include "prompt.h"
 
-int prompt(const char *out) {
+void prompt(const char *out) {
   printf("%s", out);
 }

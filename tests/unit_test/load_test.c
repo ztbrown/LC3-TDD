@@ -4,6 +4,7 @@
 
 #include "../../src/load.h"
 #include "../../src/vm.h"
+#include "../../src/memory.h"
 
 #include "load_test.h"
 
@@ -12,13 +13,14 @@ START_TEST(it_loads_new_PC_to_DR_and_checks_condition_flags)
   //Arrange
   uint16_t instr=0b0010010010101010;
   reg[R_PC] = 0b010;
+  mem_write(0b010101100, 50);
   reg[R_COND] = FL_ZRO;
 
   // Act
   load(instr);
 
   // Assert
-  ck_assert_int_eq(reg[0b010], 0b010101010);
+  ck_assert_int_eq(reg[0b010], 50);
   ck_assert_int_eq(reg[R_COND], FL_POS);
 }
 END_TEST

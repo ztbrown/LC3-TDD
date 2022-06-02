@@ -3,6 +3,6 @@
 
 #include <stdint.h>
 
-uint16_t update_flags(uint16_t r);
+void update_flags(uint16_t r);
 
 #endif // UPDATE_FLAGS_H

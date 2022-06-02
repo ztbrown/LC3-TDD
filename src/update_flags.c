@@ -2,7 +2,7 @@
 #include "update_flags.h"
 #include "vm.h"
 
-uint16_t update_flags(uint16_t r) {
+void update_flags(uint16_t r) {
   if (reg[r] == 0) {
     reg[R_COND] = FL_ZRO;
   } 

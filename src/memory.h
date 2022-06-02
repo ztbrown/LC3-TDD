@@ -5,6 +5,7 @@
 
 #define MEMORY_MAX (1 << 16)
 
+extern uint16_t memory[MEMORY_MAX]; 
 uint16_t mem_read(uint16_t address);
 void mem_write(uint16_t address, uint16_t value);
 

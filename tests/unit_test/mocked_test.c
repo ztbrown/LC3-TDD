@@ -147,7 +147,7 @@ START_TEST(it_reads_characters_two_at_a_time_from_memory_and_outputs_to_console_
 
   // Assert
   // hello world
-  ck_assert_int_eq(mock_get_call_count(&putchar_mock), 12);
+  ck_assert_int_eq(mock_get_call_count(&putchar_mock), 11);
 }
 END_TEST
 

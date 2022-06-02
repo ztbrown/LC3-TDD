@@ -12,8 +12,8 @@
 #include <sys/termios.h>
 #include <sys/mman.h>
 
-#include "vm.h"
 #include "memory.h"
+#include "vm.h"
 #include "add.h"
 #include "and.h"
 #include "conditional_branch.h"
@@ -30,17 +30,26 @@
 #include "str.h"
 #include "trap.h"
 
-uint16_t check_key()
+enum
 {
-  fd_set readfds;
-  FD_ZERO(&readfds);
-  FD_SET(STDIN_FILENO, &readfds);
+  OP_BR = 0, /* branch */
+  OP_ADD,    /* add  */
+  OP_LD,     /* load */
+  OP_ST,     /* store */
+  OP_JSR,    /* jump register */
+  OP_AND,    /* bitwise and */
+  OP_LDR,    /* load register */
+  OP_STR,    /* store register */
+  OP_RTI,    /* unused */
+  OP_NOT,    /* bitwise not */
+  OP_LDI,    /* load indirect */
+  OP_STI,    /* store indirect */
+  OP_JMP,    /* jump */
+  OP_RES,    /* reserved (unused) */
+  OP_LEA,    /* load effective address */
+  OP_TRAP    /* execute trap */
+};
 
-  struct timeval timeout;
-  timeout.tv_sec = 0;
-  timeout.tv_usec = 0;
-  return select(1, &readfds, NULL, NULL, &timeout) != 0;
-}
 
 struct termios original_tio;
 
@@ -65,6 +74,7 @@ void handle_interrupt(int signal)
 
 int main(int argc, const char* argv[])
 {
+  printf("Starting up");
   if (argc < 2)
   {
     /* show usage string */
@@ -83,26 +93,6 @@ int main(int argc, const char* argv[])
 
   signal(SIGINT, handle_interrupt);
   disable_input_buffering();
-  enum
-  {
-    OP_BR = 0, /* branch */
-    OP_ADD,    /* add  */
-    OP_LD,     /* load */
-    OP_ST,     /* store */
-    OP_JSR,    /* jump register */
-    OP_AND,    /* bitwise and */
-    OP_LDR,    /* load register */
-    OP_STR,    /* store register */
-    OP_RTI,    /* unused */
-    OP_NOT,    /* bitwise not */
-    OP_LDI,    /* load indirect */
-    OP_STI,    /* store indirect */
-    OP_JMP,    /* jump */
-    OP_RES,    /* reserved (unused) */
-    OP_LEA,    /* load effective address */
-    OP_TRAP    /* execute trap */
-  };
-
   /* since exactly one condition flag should be set at any given time, set the Z flag */
   reg[R_COND] = FL_ZRO;
 

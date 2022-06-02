@@ -5,5 +5,5 @@
 #include "vm.h"
 
 void jmp_ret(uint16_t instr) {
-  reg[R_PC] = reg[sign_extend(instr >> 6 & 0x7, 5)];
+  reg[R_PC] = reg[instr >> 6 & 0x7];
 }
